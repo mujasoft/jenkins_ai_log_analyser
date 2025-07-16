@@ -1,0 +1,17 @@
+[system_setup]
+
+persist_dir = "./chroma_store"
+collection_name = "jenkins_logs"
+ollama_url = "http://localhost:11434/api/generate"
+model_name = "mistral"
+n_results = 3
+no_of_threads = 4
+log_folder = "data"
+
+
+[questions]
+question1 = "What is the summary of the results so far?"
+question2 = "How often did the checkout phase fail?"
+question3 = "Can you tabulate how often the different phases pass or fail?"
+question4 = "What seems to be the most common error?"
+question5 = "How many times did the test fail?" 
