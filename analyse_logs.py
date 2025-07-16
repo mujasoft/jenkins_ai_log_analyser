@@ -78,6 +78,11 @@ Question: {query}
     response = requests.post(ollama_url, json=payload)
     return response.json().get("response", "[No response]")
 
+# CLI option was avoided on purpose as this tool is meant to be text driven.
+# It is far too tedious to type our questions on comandline without some
+# interactive output. The user is meant to write his/her/their questions
+# in the settings.toml and run this script.
+
 
 if __name__ == "__main__":
     # Loop through all configured questions (alphabetical order)
