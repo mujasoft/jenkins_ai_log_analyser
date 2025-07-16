@@ -59,8 +59,8 @@ def ask_question(query: str) -> str:
     contexts = "\n-----------\n".join(retrieved_docs)
 
     # Construct full prompt for the LLM
-    full_prompt = f"""You are a world class expert at analyzing Jenkins CI logs.
-Use the logs below to answer the question.
+    full_prompt = f"""You are a world class expert at analyzing Jenkins CI \
+logs. Use the logs below to answer the question.
 
 Logs:
 {contexts}
