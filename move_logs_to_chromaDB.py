@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dynaconf import Dynaconf
 import logging
 import re
 from pathlib import Path
@@ -20,10 +21,15 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from sentence_transformers import SentenceTransformer
 import typer
 
+# Setup logging.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s -\
 %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+# Load config. 
+settings = Dynaconf(settings_files=["settings.toml"])
+
+# Load typer.
 app = typer.Typer(
     help="A tool to process Jenkins log files, chunk them by pipeline stages, \
 and embed them into a ChromaDB for fast retrieval."
@@ -103,29 +109,24 @@ def chunk_all_logs(log_dir: str = "data/logs", max_workers: int = 4):
 
 
 @app.command()
-def add_to_chromadb(local_chromaDB_store: str = "./chroma_store",
-                    collection_name: str = "jenksin_logs",
-                    log_folder: str = "data/logs",
-                    max_workers: int = 4):
-    """Chunks all the logs and inserts them to a chromaDB.
-
-    Arg(s):
-        local_chromaDB_store (str, optional): name of local store.
-                                              Defaults to "./chroma_store".
-        collection_name (str, optional): A helpful name for collection.
-                                         Defaults to "jenksin_logs".
-        log_folder (str, optional): location of log folder.
-                                    Defaults to "data/logs".
-        max_workers (int, optional): Number of threads to take advantage
-                                     of parallel threads. Defaults to 4.
-    """
+def add_to_chromadb(
+    local_chromadb_store: str = typer.Option(settings.system_setup.persist_dir,
+                                             help="Path to local store."),
+    collection_name: str = typer.Option(settings.system_setup.collection_name,
+                                        help="A helpful name for collection."),
+    log_folder: str = typer.Option(settings.system_setup.log_folder,
+                                   help="Location of log folder."),
+    max_workers: int = typer.Option(settings.system_setup.no_of_threads,
+                                    help="No. of threads used to chunk files.")
+):
+    """Chunks all the logs and inserts them to a chromaDB."""
 
     logger.info("*** Creating chunks from logs based on pipeline stages...")
     chunks = chunk_all_logs(log_folder, max_workers)
     logger.info("*** Done")
 
     # Initialize ChromaDB client (local store)
-    chroma_client = chromadb.PersistentClient(path=local_chromaDB_store)
+    chroma_client = chromadb.PersistentClient(path=local_chromadb_store)
 
     # Create or get the collection
     collection = chroma_client.get_or_create_collection(name=collection_name)
@@ -133,7 +134,7 @@ def add_to_chromadb(local_chromaDB_store: str = "./chroma_store",
     # Load the embedding model
     model = SentenceTransformer("all-MiniLM-L6-v2")  # small and fast
 
-    logger.info(f"*** Embed and add chunks to \"{local_chromaDB_store}\"")
+    logger.info(f"*** Embed and add chunks to \"{local_chromadb_store}\"")
     # Embed and add to ChromaDB
     for idx, chunk in enumerate(chunks):
         embedding = model.encode(chunk["text"]).tolist()

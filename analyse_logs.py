@@ -18,34 +18,38 @@ from dynaconf import Dynaconf
 import requests
 from sentence_transformers import SentenceTransformer
 
+# Load settings from settings.toml
 settings = Dynaconf(
     settings_files=["settings.toml"]
 )
 
-# Extract chromaDB settings.
+# Extract system setup configuration
 persist_dir = settings.system_setup.persist_dir
 collection_name = settings.system_setup.collection_name
 ollama_url = settings.system_setup.ollama_url
 model_name = settings.system_setup.model_name
-n_results = settings.system_setup.n_results = 3
+n_results = settings.system_setup.n_results
 
-# Initialize chromaDB client.
+# Initialize ChromaDB client and embedder
 client = chromadb.PersistentClient(path=persist_dir)
 collection = client.get_collection(name=collection_name)
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 
-def ask_question(query: str):
-    """Give a question to the local LLM.
+def ask_question(query: str) -> str:
+    """
+    Send a question to the local LLM using embedded Jenkins log context.
 
     Args:
-        query (str): Provide a question.
-    """    """"""
+        query (str): The natural language question to answer.
 
-    # Embed the question.
+    Returns:
+        str: The response from the LLM.
+    """
+    # Embed the question
     query_embedding = embedder.encode(query).tolist()
 
-    # Search Chroma DB.
+    # Search Chroma DB for relevant log chunks
     results = collection.query(
         query_embeddings=[query_embedding],
         n_results=n_results
@@ -54,9 +58,9 @@ def ask_question(query: str):
     retrieved_docs = results["documents"][0]
     contexts = "\n-----------\n".join(retrieved_docs)
 
-    # Create a proper prompt for the LLM.
-    full_prompt = f"""You are a world class expert at analyzing Jenkins CI\
-logs. Use the logs below to answer the question.
+    # Construct full prompt for the LLM
+    full_prompt = f"""You are a world class expert at analyzing Jenkins CI logs.
+Use the logs below to answer the question.
 
 Logs:
 {contexts}
@@ -64,9 +68,9 @@ Logs:
 Question: {query}
 """
 
-    # Prepare a payload to send to the local LLM.
+    # Send request to local LLM server
     payload = {
-        "model": model_name,  # Using mistral.
+        "model": model_name,
         "prompt": full_prompt,
         "stream": False
     }
@@ -76,9 +80,8 @@ Question: {query}
 
 
 if __name__ == "__main__":
-
-    # Loop through all the questions and print out their answers.
-    for key, value in settings.questions.items():
-
+    # Loop through all configured questions (alphabetical order)
+    for key, value in sorted(settings.questions.items()):
+        print(f"Q.: {value}")
         answer = ask_question(value)
-        print(f"{answer}\n")
+        print(f">>ANS: {answer}\n")
