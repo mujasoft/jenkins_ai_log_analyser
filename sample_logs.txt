@@ -1,0 +1,21 @@
+Q.: What is the summary of the results so far?
+>>ANS:  Based on the logs provided, it appears that three stages named "Test" have been executed in a Jenkins CI pipeline. In each stage, a shell command is run to print 'Test running...', followed by Maven tests being executed based on the [INFO] Test completed successfully messages. Each of these tests has been successful as indicated by exit code 0.
+
+In summary, all three test runs have passed with success, producing no errors or failures.
+
+Q.: How often did the checkout phase fail?
+>>ANS:  Based on the provided Jenkins CI logs, the Checkout phase failed three times as indicated by the "Unknown error" message and exit code 1.
+
+Q.: Can you tabulate how often the different phases pass or fail?
+>>ANS:  Based on the provided logs, the 'Test' phase has passed three times without any failures as indicated by the exit code of 0 in each case. Here is the tabulation for your reference:
+
+| Phase       | Passes | Fails |
+|-------------|--------|-------|
+| Test        | 3      | 0     |
+
+Q.: What seems to be the most common error?
+>>ANS:  Based on the provided logs, it appears that there is a recurring error during the "Checkout" stage. The error message is "[ERROR] Unknown error", and the exit code is always 1. Therefore, the most common error in these Jenkins CI logs seems to be related to the checkout process itself. It may be useful to investigate further into the specific repository or SCM tool being used for the checkout stage.
+
+Q.: How many times did the test fail?
+>>ANS:  Based on the provided Jenkins CI logs, the test has run three times and each time it has completed successfully as indicated by exit code 0. Therefore, the test did not fail any time in these runs.
+
