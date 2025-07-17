@@ -1,0 +1,6 @@
+Some basic testing to come.
+
+
+1. Chunking.
+2. Configuration.
+3. Ai Analysis
