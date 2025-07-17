@@ -1,0 +1,35 @@
+[Pipeline] Start of Pipeline
+[Pipeline] stage: Checkout
+[Pipeline] { (Checkout)
+[Pipeline] sh
++ echo 'Checkout running...'
+Checkout running...
+[INFO] Checkout completed successfully.
+exit code: 0
+[Pipeline] } // Checkout
+[Pipeline] stage: Build
+[Pipeline] { (Build)
+[Pipeline] sh
++ echo 'Build running...'
+Build running...
+[ERROR] Compilation terminated unexpectedly
+exit code: 1
+[Pipeline] } // Build
+[Pipeline] stage: Test
+[Pipeline] { (Test)
+[Pipeline] sh
++ echo 'Test running...'
+Test running...
+[INFO] Test completed successfully.
+exit code: 0
+[Pipeline] } // Test
+[Pipeline] stage: Deploy
+[Pipeline] { (Deploy)
+[Pipeline] sh
++ echo 'Deploy running...'
+Deploy running...
+[ERROR] 404 Not Found
+exit code: 1
+[Pipeline] } // Deploy
+[Pipeline] End of Pipeline
+Finished: 
