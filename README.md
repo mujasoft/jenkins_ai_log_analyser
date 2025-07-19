@@ -1,5 +1,5 @@
 
-# Jenkins AI Log Analyser
+# Jenkins Log Analyser
 
 A CLI tool that uses AI to intelligently analyze Jenkins logs by segmenting, embedding, and answering natural language questions.
 
