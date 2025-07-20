@@ -12,7 +12,7 @@ CI/CD pipelines generate massive amounts of logs — much of it repetitive, nois
 - Each component is Unix-like: it does one thing well
 
 ## Demo
-![Watch Demo](demo.mov)
+[Watch Demo (3m)](./demo.mov)
 
 
 ## Technical Summary
