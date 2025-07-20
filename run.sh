@@ -10,7 +10,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 function help() {
-  echo -e "${YELLOW}Jenkins Log Vectorizer - CLI Tool${NC}"
+  echo -e "${YELLOW}Jenkins Log Analyser - CLI Tool${NC}"
   echo ""
   echo "Usage:"
   echo "  $0             Run full pipeline: chunk logs and analyze them"
