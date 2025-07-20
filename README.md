@@ -1,7 +1,7 @@
 
 # Jenkins Log Analyser
 
-A CLI tool that uses AI to intelligently analyze Jenkins logs by segmenting, embedding, and answering natural language questions.
+A tool that uses AI to intelligently analyze Jenkins logs by segmenting, embedding, and answering natural language questions.
 
 CI/CD pipelines generate massive amounts of logs — much of it repetitive, noisy, and hard to digest. This tool streamlines log analysis by using embeddings and a local LLM to summarize pipeline behavior, highlight failure patterns, and answer questions with context-aware insight.
 
