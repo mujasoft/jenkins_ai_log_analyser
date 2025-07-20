@@ -11,6 +11,10 @@ CI/CD pipelines generate massive amounts of logs — much of it repetitive, nois
 - Easy to run, CI/CD friendly, and CLI-based
 - Each component is Unix-like: it does one thing well
 
+## Demo
+![Watch Demo](assets/demo.mov)
+
+
 ## Technical Summary
 
 This tool reads Jenkins logs, segments them into meaningful pipeline stages, embeds them with a transformer model, and stores them in a local ChromaDB vector database. It then sends queries to a local LLM (e.g., Mistral) via Ollama to answer questions based on log content.
