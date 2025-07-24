@@ -6,7 +6,8 @@
 
 A tool that uses AI to intelligently analyze Jenkins logs by segmenting, embedding, and answering natural language questions.
 
-CI/CD pipelines generate massive amounts of logs — much of it repetitive, noisy, and hard to digest. This tool streamlines log analysis by using embeddings and a local LLM to summarize pipeline behavior, highlight failure patterns, and answer questions with context-aware insight.
+CI/CD pipelines often produce large volumes of repetitive and noisy logs that are difficult to navigate. This tool simplifies the analysis process by leveraging embeddings and a local LLM to summarize pipeline activity, identify failure patterns and respond to natural language queries with context-aware insights.
+
 
 ## Why This Exists
 
